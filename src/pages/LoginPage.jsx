@@ -1,3 +1,5 @@
+import { useTheme } from '../context/ThemeContext';
+import { Sun, Moon } from 'lucide-react';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -5,6 +7,7 @@ import { Bike, ShieldCheck, ArrowRight, Lock, Mail, AlertTriangle, Sparkles } fr
 
 export default function LoginPage() {
   const { login } = useAuth();
+  const { isDark, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
@@ -40,7 +43,18 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-950 text-stone-100 flex flex-col justify-center px-4 py-8">
+    <div className="min-h-screen bg-stone-50 dark:bg-stone-950 text-stone-900 dark:text-stone-100 flex flex-col justify-center px-4 py-8 relative transition-colors duration-200">
+      <div className="absolute top-4 right-4 z-10">
+        <button
+          type="button"
+          onClick={toggleTheme}
+          className="p-2 rounded-xl bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-700 dark:text-amber-400 border border-stone-200 dark:border-stone-700 transition flex items-center justify-center cursor-pointer shadow-xs"
+          title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+          aria-label={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+        >
+          {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-stone-600" />}
+        </button>
+      </div>
       <div className="max-w-md w-full mx-auto space-y-6">
         
         {/* Header Branding */}
